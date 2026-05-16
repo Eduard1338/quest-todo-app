@@ -1,0 +1,752 @@
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(59, 130, 246, 0.15);
+  padding: 8px 0;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 16px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.nav-btn .nav-icon {
+  font-size: 22px;
+  transition: transform 0.2s;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+}
+
+.nav-btn.active .nav-icon {
+  transform: scale(1.15);
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.nav-btn:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+/* ===== Page Container ===== */
+.page {
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+/* ===== Profile Card (Form 1) ===== */
+.profile-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.profile-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.profile-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.profile-avatar .hat {
+  position: absolute;
+  top: -14px;
+  font-size: 24px;
+}
+
+.profile-name-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.profile-title {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.settings-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.settings-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--primary);
+}
+
+/* ===== Setting panel ===== */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.settings-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.settings-panel {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-overlay.open .settings-panel {
+  transform: scale(1);
+}
+
+.settings-panel h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-panel h2 button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.settings-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.settings-info strong {
+  color: var(--text);
+}
+
+.settings-info .highlight {
+  color: var(--primary);
+}
+
+/* ===== Level Card (Form 2) ===== */
+.level-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.level-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.level-number {
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.level-xp-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.level-xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 6px;
+  transition: width 0.6s ease;
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.level-xp-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.level-xp-text span:last-child {
+  color: var(--text-secondary);
+}
+
+/* ===== Stats Row ===== */
+.stats-row {
+  display: flex;
+  gap: 8px;
+}
+
+.stat-box {
+  flex: 1;
+  padding: 12px 12px;
+  text-align: center;
+  border-radius: var(--radius-sm);
+}
+
+.stat-box .stat-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.stat-box .stat-name {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.stat-box .stat-val {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.stat-box.strength .stat-val { color: var(--danger); }
+.stat-box.stamina .stat-val { color: var(--success); }
+.stat-box.intellect .stat-val { color: var(--secondary); }
+
+/* ===== Quest Card ===== */
+.quest-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quest-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quest-card-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quest-card-header .count {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(59, 130, 246, 0.1);
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+.quest-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.quest-item.done {
+  opacity: 0.6;
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.quest-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.quest-item.done .quest-name {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.quest-rewards {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.quest-reward {
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.quest-reward.xp { color: var(--secondary); }
+.quest-reward.gold { color: var(--accent); }
+
+.quest-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.quest-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.quest-btn.complete {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.quest-btn.complete:hover {
+  background: rgba(16, 185, 129, 0.3);
+}
+
+.quest-btn.delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+.quest-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.quest-empty {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ===== Add Quest Page ===== */
+.add-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.add-page h2 {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-form label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-form input,
+.add-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-form input:focus,
+.add-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.add-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.add-form .reward-preview {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+.add-form .reward-preview span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.add-form .reward-preview .xp { color: var(--secondary); }
+.add-form .reward-preview .gold { color: var(--accent); }
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px var(--primary-glow);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Shop Page ===== */
+.shop-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.shop-page h2 {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.shop-balance .gold-icon { font-size: 20px; }
+.shop-balance .gold-amount { color: var(--accent); }
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-bottom: 80px;
+}
+
+.shop-item {
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.shop-item-img {
+  font-size: 36px;
+}
+
+.shop-item-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.shop-item-desc {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+.shop-item-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shop-item-btn {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.shop-item-btn.buy {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+}
+
+.shop-item-btn.buy:hover {
+  transform: scale(1.03);
+}
+
+.shop-item-btn.buy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.shop-item-btn.owned {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success);
+}
+
+.shop-item-btn.equipped {
+  background: rgba(16, 185, 129, 0.35);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+/* ===== Reward Toast ===== */
+.reward-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  text-align: center;
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 40px var(--primary-glow);
+}
+
+.reward-toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+.reward-toast .emoji { font-size: 40px; margin-bottom: 8px; }
+.reward-toast .title { font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.reward-toast .desc { font-size: 13px; color: var(--text-secondary); }
+
+/* ===== Level Up Overlay ===== */
+.level-up-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.level-up-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.level-up-content {
+  text-align: center;
+  animation: levelUpBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.level-up-content .big-emoji { font-size: 64px; margin-bottom: 12px; }
+.level-up-content h2 {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+.level-up-content p { color: var(--text-secondary); font-size: 14px; }
+
+@keyframes levelUpBounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Cumulative ===== */
+.cumulative {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 8px 0 4px;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.2); border-radius: 2px; }
+
+/* ===== Page title on non-main pages ===== */
+.page-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
